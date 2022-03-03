@@ -357,7 +357,12 @@ function SelectOnly(event_type) {
     }
   }
   ChangeTheme(theme);
-  searchParams.append('topic', 'webdev');
+  let here = new URL(window.location.href);
+    console.log(here);
+    here.searchParams.append('firstKey', 'theValue');
+    console.log(here);
+    here.searchParams.append('key2', 'another');
+    console.log(here);
 }
 
 function GeneratePraise() {
