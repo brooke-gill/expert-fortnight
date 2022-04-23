@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>asdlkfjasldkfjlasdfr</title>
+    <title>Hypsadfr</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -251,6 +251,9 @@
                                                 // If the user accepts, let's create a notification
                                                 if (permission === "granted") {
                                                   var notification = new Notification("Hi there!");
+                                                }
+                                                else {
+                                                  document.getElementById('desktop-on').innerHTML = "Notifications denied :("
                                                 }
                                               });
                                             }
