@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>Hypidasfr</title>
+    <title>Hypixel Pit Agmosh Tracker</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -27,7 +27,7 @@
   <div id="settings-section" style="display: none; position: relative; bottom: 40px;">
   <p style="font-size:15px"><span>Theme: </span><span id="settings-theme-dark" onclick='ChangeTheme("dark")'>Dark</span><span> / </span><span id="settings-theme-light" onclick='ChangeTheme("light")'>Light</span></p> 
   <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p>
-  <p style="font-size:15px"><span>Event reminder sound: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
+  <p style="font-size:15px"><span>Event notifications: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
   <p style="font-size:15px"><span>Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
   <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
   <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
@@ -91,6 +91,7 @@
   var praise_urls = ["http://deviantart.com/hextant","https://twitter.com/ellwixd","https://twitter.com/oSnapLLL","https://youtu.be/dQw4w9WgXcQ","https://twitter.com/cutekitty271","https://namemc.com/profile/354aa68a43694ba29ff23c705dfc11e6","https://twitter.com/KinderFissa","https://twitter.com/c4pshypixel","https://vnmm.dev/","https://namemc.com/profile/9f65cdd1-81d7-49f3-8d41-fef76a7a8768","https://hypixel.net/members/probot.1901786/","https://www.tiktok.com/@swuxify_","https://twitter.com/leskyeagle","https://twitter.com/julikabum_0","https://pitpanda.rocks","https://brookeafk.com","https://twitter.com/branodon","https://pitpanda.rocks/players/18fe5844ce244d11ad3435c96435900f","https://twitter.com/WorkingMC"]
   //Note: Jojo's cock is seven inches (18cm) long. I've been forced to write this, unfortunately. Sorry that you had to read this.
   var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop']
+  var greeting = ['Hey there— ','Hi! ','Get ready— ','Hurry up! ']
   var event_sound = new Audio("event_arriving.mp3");
   event_sound.volume = 0.2;
   var ok_ids = []
@@ -512,7 +513,8 @@
     for(var i = window.HiddenEventCount; i <= window.HiddenEventCount + 3; i++) {
       if (window.AudioEvents.includes(window.data[i]['event'])  && window.data[i]['timestamp'] - currentTime() <= (AudioTimer * 1000 + 1000) && window.data[i]['timestamp'] - currentTime() >= (AudioTimer * 1000 - 1000)) {
       event_sound.play();
-      var notification = new Notification("Hey there-- " + window.data[i]['event'] + " is starting in " + AudioTimer/60 + " seconds!");
+
+      var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + AudioTimer/60 + " minutes!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
    }
   }}
   }
