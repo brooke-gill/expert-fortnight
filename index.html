@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>Hypixsadfasdfsdaffadsr</title>
+    <title>AMgougs</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -238,6 +238,11 @@
                                             if (!("Notification" in window)) {
                                               document.getElementById('desktop-on').innerHTML = "Your browser doesn't support this!"
                                             }
+                                            else if (Notification.permission === "denied") {
+                                              document.getElementById('desktop-on').innerHTML = "Notifications denied :("
+                                              window.SettingsDesktopNotifs = 0;
+                                              tog = 0;
+                                            }
 
                                             // Let's check whether notification permissions have already been granted
                                             else if (Notification.permission === "granted") {
@@ -256,6 +261,7 @@
                                                 else {
                                                   document.getElementById('desktop-on').innerHTML = "Notifications denied :("
                                                   window.SettingsDesktopNotifs = 0;
+                                                  tog = 0;
                                                 }
                                               });
                                             }
