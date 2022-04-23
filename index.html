@@ -15,10 +15,10 @@
   
   <body style="font-family: minecraftregular" background-color="black" class="unselectable">
   
-    <div id="current-event" style="position: absolute; top: 35px; font-size: 25px; width: 450px; word-wrap: break-word; left: 35%; vertical-align: middle; padding: 1px;" class="flashtext unselectable" align="center">Current events will<br>show up here.</div>
+    <div id="current-event" style="position: absolute; top: 35px; font-size: 25px; width: 475px; word-wrap: break-word; left: 35%; vertical-align: middle; padding: 1px;" class="flashtext unselectable" align="center">Current events will<br>show up here.</div>
   
   
-    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">brokeafk.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
+    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">brookeafk.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
     </div>
   
     <div style="background: #314; padding: 5px; width: 120px; height: 32px; position: absolute; left: 300px; top: 24px; border-radius: 25px; display:flex; align-items: center; vertical-align:center; justify-content: center;
@@ -30,10 +30,11 @@
   <p style="font-size:15px"><span>Event notifications: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
   <p id="anotif" style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
   <p id="dnotif" style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
+  <p style="font-size:15px"><span id="alert-nobells" style="color: #ff7777; display: none">You're not being reminded for any events!<br>Click the bells in the top-right corner to receive notifications.</span></p>
   <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
   <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
+  <p style="font-size:15px"><span id="alert-noevents" style="color: #ff7777; display: none">You don't have any events selected!<br>Click the event names in the top-right corner to make some visible.</span></p>
 
-  
   <div id="notifications-major" style="display: block; position: absolute; top: -50px; right: 200px; text-align: right; font-size: 15px; color: #FFFFFF;">
     <div><span id="visible-Pizza" onclick='VisibilityToggle("Pizza")' class="hand_cursor">Pizza</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Pizza" onclick='NotifToggle("Pizza")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
     <div><span id="visible-Raffle" onclick='VisibilityToggle("Raffle")' class="hand_cursor">Raffle</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Raffle" onclick='NotifToggle("Raffle")'class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
@@ -73,8 +74,9 @@
   var settingsOpened = false;
   var NormalText = "#000000";
   var EventFlashSec = 60;
-  var AudioTimer = -10;
+  var NotifTimer = -10;
   var DoesStuffExist = false;
+  var HasStuffLoaded = false;
   var Palette = 0;
   var SettingsSelectedEvents = 262143;
   var SettingsNotifyEvents = 0;
@@ -204,14 +206,20 @@
   }
   
   function SetAudio(seconds) {
-    window.AudioTimer = seconds;
-    console.log("Notification timer set to " + AudioTimer + " seconds.")
+    window.NotifTimer = seconds;
+    console.log("Notification timer set to " + NotifTimer + " seconds.")
     document.getElementById('anotif').style.display = "block"
     document.getElementById('dnotif').style.display = "block"
+    if(seconds > 0) {
     for(var i = 0; i < 18; i++) {
       if(DoesStuffExist == true) {
       document.getElementById('notif-' + eventsNoSpaces[i]).style.display = "inline";
     }}
+    if(window.AudioEvents.length == 0 && HasStuffLoaded == true) {
+      console.log(window.AudioEvents + " audioevents")
+     document.getElementById('alert-nobells').style.display = "block";
+      }
+  }
     if(seconds == 300) {
       document.getElementById('audio-300').style.color = NormalText;
       document.getElementById('audio-180').style.color = "#888888";
@@ -237,6 +245,7 @@
       document.getElementById('audio-300').style.color = "#888888"; 
       document.getElementById('anotif').style.display = "none"
       document.getElementById('dnotif').style.display = "none"
+      document.getElementById('alert-nobells').style.display = "none";
       for(var i = 0; i < 18; i++) {
         if(DoesStuffExist == true) {
         document.getElementById('notif-' + eventsNoSpaces[i]).style.display = "none";
@@ -341,7 +350,7 @@
     document.getElementById('settings').style.color = "#888888";
     if (DoesStuffExist == true) {
       EventFlash(window.EventFlashSec);
-      SetAudio(window.AudioTimer);
+      SetAudio(window.NotifTimer);
       DNotif(window.SettingsDesktopNotifs);
       ANotif(window.SettingsAudioNotifs);
       console.log("Stuff exists. Updating event flashes and audio.");
@@ -432,6 +441,7 @@
         }
         window.VisibleEvents = ["Quick Maths","Dragon Egg","2x Rewards","Care Package","KOTL","KOTH","Auction","Giant Cake","All bounty"];
         SettingsSelectedEvents = 511;
+        document.getElementById('alert-noevents').style.display = "none";
       }
     } else if(event_type == "major") {
       for(var i = window.HiddenEventCount; i < EventsToLoad; i++) {
@@ -446,12 +456,16 @@
         window.VisibleEvents = ["Squads","Beast","Pizza","Rage Pit","Spire","Robbery","Blockhead","Raffle","Team Deathmatch"];
         SettingsSelectedEvents = 261632;
       }
-  
+      document.getElementById('alert-noevents').style.display = "none";
     } else if(event_type == "nothing") {
     window.VisibleEvents = [];
     window.AudioEvents = [];
     SettingsSelectedEvents = 0;
     SettingsNotifyEvents = 0;
+    document.getElementById('alert-noevents').style.display = "block"
+    if(NotifTimer > 0) {
+        document.getElementById('alert-nobells').style.display = "block";
+    }
   
     for(var i = window.HiddenEventCount; i < EventsToLoad; i++) {
         document.getElementById('event_' + String(i)).style.display = "none";
@@ -543,13 +557,13 @@
     let currentTime = (Date.now);
     if(DoesStuffExist == true) {
     for(var i = window.HiddenEventCount; i <= window.HiddenEventCount + 3; i++) {
-      if (window.AudioEvents.includes(window.data[i]['event'])  && window.data[i]['timestamp'] - currentTime() <= (AudioTimer * 1000 + 1000) && window.data[i]['timestamp'] - currentTime() >= (AudioTimer * 1000 - 1000)) {
+      if (window.AudioEvents.includes(window.data[i]['event'])  && window.data[i]['timestamp'] - currentTime() <= (NotifTimer * 1000 + 1000) && window.data[i]['timestamp'] - currentTime() >= (NotifTimer * 1000 - 1000)) {
       if(SettingsAudioNotifs == 1) {
       event_sound.play();
       }
       if(SettingsDesktopNotifs == 1) {
       if(Date.now() > time1 + 10000) { //if it's been more than 10 seconds since the last notification
-      var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + AudioTimer/60 + " minutes!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
+      var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + NotifTimer/60 + " minutes!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
       time1 = Date.now()
       }
       }
@@ -617,6 +631,9 @@
       if (window.data[i]["event"].includes(toggle)) {
         document.getElementById('event_' + String(i)).style.display = "none";
       }
+      if(VisibleEvents.length == 0) {
+    document.getElementById('alert-noevents').style.display = "block";
+      }
     }
     } else {
       window.VisibleEvents.push(toggle);
@@ -627,6 +644,8 @@
         document.getElementById('event_' + String(i)).style.display = "block";
       }
       }
+      document.getElementById('alert-noevents').style.display = "none";
+
     }
     console.log("List of events that are visible:")
     console.log(window.VisibleEvents);
@@ -642,7 +661,7 @@
           DNotif(0);
           ANotif(0);
       } else {
-      AudioTimer = here.searchParams.get('reminder');
+      NotifTimer = here.searchParams.get('reminder');
       EventFlashSec = here.searchParams.get('flashing');
       Palette = here.searchParams.get('palette')
       theme = here.searchParams.get('theme');
@@ -658,7 +677,7 @@
       SettingsAudioNotifs = parseInt(here.searchParams.get('audio'))
   
       ChangePalette(Palette);
-      SetAudio(parseInt(AudioTimer)); //this does not work //then WHY did you add it??
+      SetAudio(parseInt(NotifTimer)); //this does not work //then WHY did you add it??
       EventFlash(window.EventFlashSec);
   
       if(window.showEventToD == 0) {
@@ -716,11 +735,16 @@
           }
       } 
       console.log(AudioEvents);
+      if(window.AudioEvents.length == 0 && DoesStuffExist == true) {
+      console.log(window.AudioEvents + " audioevents")
+     document.getElementById('alert-nobells').style.display = "block";
+      }
   
   
   
       const queryString = window.location.search; //no clue what this does but i'm really scared to remove it
       ChangeTheme(theme);
+      HasStuffLoaded = true;
       }
   }
   
@@ -732,8 +756,12 @@
         window.AudioEvents.splice(index, 1);
         document.getElementById('notif-' + toggle.replace(/\s/g, '')).style.fill = "#888888";
       }
+      if(window.AudioEvents.length == 0 && NotifTimer > 0) {
+        document.getElementById('alert-nobells').style.display = "block";
+      }
     } else {
       window.AudioEvents.push(toggle);
+      document.getElementById('alert-nobells').style.display = "none";
       document.getElementById('notif-' + toggle.replace(/\s/g, '')).style.fill = NormalText;
       SettingsNotifyEvents = (SettingsNotifyEvents + Math.pow(2, window.events.indexOf(toggle)));
       for(var i = window.HiddenEventCount; i < EventsToLoad; i++) {
@@ -843,7 +871,7 @@
       here.searchParams.append('palette', Palette);
       here.searchParams.append('timestamps', (showEventToD | 0).toString() + (showEventTuE | 0).toString() + (showEventDNC | 0).toString());
       here.searchParams.append('flashing', EventFlashSec);
-      here.searchParams.append('reminder', AudioTimer);
+      here.searchParams.append('reminder', NotifTimer);
       here.searchParams.append('desktop', SettingsDesktopNotifs);
       here.searchParams.append('audio', SettingsAudioNotifs);
   
