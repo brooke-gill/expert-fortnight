@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>Hypixel Pit Events Tracker</title>
+    <title>asdlkfjasldkfjlasdfr</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -26,10 +26,12 @@
     
   <div id="settings-section" style="display: none; position: relative; bottom: 40px;">
   <p style="font-size:15px"><span>Theme: </span><span id="settings-theme-dark" onclick='ChangeTheme("dark")'>Dark</span><span> / </span><span id="settings-theme-light" onclick='ChangeTheme("light")'>Light</span></p> 
-  <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
-  <p style="font-size:15px"><span id="settings-flashing">Flashing pre-event: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
+  <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p>
   <p style="font-size:15px"><span>Event reminder sound: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
-  <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p> 
+  <p style="font-size:15px"><span>Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
+  <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
+  <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
+
   
   <div id="notifications-major" style="display: block; position: absolute; top: -50px; right: 200px; text-align: right; font-size: 15px; color: #FFFFFF;">
     <div><span id="visible-Pizza" onclick='VisibilityToggle("Pizza")' class="hand_cursor">Pizza</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Pizza" onclick='NotifToggle("Pizza")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
@@ -75,6 +77,7 @@
   var Palette = 0;
   var SettingsSelectedEvents = 262143;
   var SettingsNotifyEvents = 0;
+  var SettingsDesktopNotifs = 0;
   
   var theme = "dark";
   var showEventToD = true; //Time of Day
@@ -87,7 +90,7 @@
   var praise_names = ["Andrew","Ellie","oSnapL","1Mad","Emma","catweapon","Twen","C4PS","vnmm","Vermasium","Stampy_fan2","swux","TheSKYeagle","julikabum","McPqndq","clouby","Brano","Ticha","Working"]
   var praise_urls = ["http://deviantart.com/hextant","https://twitter.com/ellwixd","https://twitter.com/oSnapLLL","https://youtu.be/dQw4w9WgXcQ","https://twitter.com/cutekitty271","https://namemc.com/profile/354aa68a43694ba29ff23c705dfc11e6","https://twitter.com/KinderFissa","https://twitter.com/c4pshypixel","https://vnmm.dev/","https://namemc.com/profile/9f65cdd1-81d7-49f3-8d41-fef76a7a8768","https://hypixel.net/members/probot.1901786/","https://www.tiktok.com/@swuxify_","https://twitter.com/leskyeagle","https://twitter.com/julikabum_0","https://pitpanda.rocks","https://brookeafk.com","https://twitter.com/branodon","https://pitpanda.rocks/players/18fe5844ce244d11ad3435c96435900f","https://twitter.com/WorkingMC"]
   //Note: Jojo's cock is seven inches (18cm) long. I've been forced to write this, unfortunately. Sorry that you had to read this.
-  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder']
+  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop']
   var event_sound = new Audio("event_arriving.mp3");
   event_sound.volume = 0.2;
   var ok_ids = []
@@ -111,14 +114,13 @@
     document.getElementById("current-event").setAttribute("id","replacement")
     document.getElementById("brookeafk-com").setAttribute("id","current-event")
     document.getElementById("replacement").setAttribute("id","brookeafk-com")
-    document.getElementById("current-event").innerHTML = document.body.clientWidth + "m"
+    document.getElementById("current-event").innerHTML = "brookeafk.com (mobile)"
     document.getElementById("brookeafk-com").innerHTML = ""
     document.getElementById("current-event").style.width = "200px"
     WithoutVar = "brookeafk.com"
   }
-  document.getElementById("brookeafk-com").innerText = document.body.clientWidth;
+  
   document.getElementById('settings').style.color = NormalText;
-  //document.cookie = "username=John Smith; expires=Sun, 20 Dec 2022 12:00:00 UTC; path=/";
   
   function MakeFunTimestamps(convertible) {
   let currentTime = (Date.now);
@@ -225,6 +227,39 @@
     }
   
   }
+
+  function DNotif(tog) { //Short for "Desktop Notification" and "toggle"
+    window.SettingsDesktopNotifs = tog;
+    console.log("Desktop notifications setting: " + tog);
+    if(tog == 1) {
+      document.getElementById('desktop-on').style.color = NormalText;
+      document.getElementById('desktop-off').style.color = "#888888";
+                                            // Let's check if the browser supports notifications
+                                            if (!("Notification" in window)) {
+                                              alert("This browser does not support desktop notification");
+                                            }
+
+                                            // Let's check whether notification permissions have already been granted
+                                            else if (Notification.permission === "granted") {
+                                              // If it's okay let's create a notification
+                                              var notification = new Notification("Hi there!");
+                                            }
+
+                                            // Otherwise, we need to ask the user for permission
+                                            else if (Notification.permission !== "denied") {
+                                              Notification.requestPermission().then(function (permission) {
+                                                // If the user accepts, let's create a notification
+                                                if (permission === "granted") {
+                                                  var notification = new Notification("Hi there!");
+                                                }
+                                              });
+                                            }
+    }
+    if(tog == 0) {
+      document.getElementById('desktop-off').style.color = NormalText;
+      document.getElementById('desktop-on').style.color = "#888888";
+    }
+  }
   
   function TestAudio() {
     event_sound.play();
@@ -264,6 +299,7 @@
     if (DoesStuffExist == true) {
       EventFlash(window.EventFlashSec);
       SetAudio(window.AudioTimer);
+      DNotif(window.SettingsDesktopNotifs);
       console.log("Stuff exists. Updating event flashes and audio.");
     }
     for(var i = 1; i <= window.eventsNoSpaces.length; i++) {
@@ -338,7 +374,7 @@
     document.getElementById('settings-palette-' + Palette).style.color = NormalText;
   }
   
-  
+
   function SelectOnly(event_type) {
     if(event_type == "minor") {
     for(var i = window.HiddenEventCount; i < EventsToLoad; i++) {
@@ -411,7 +447,7 @@
   var darkColours3 = ["#321433","#33142b","#143321","#332314","#1e3314","#143333","#332a14","#261433","#2f3314","#206dc5","#20c541","#c59f20","#c52320","#c520c3","#c5c320","#2323c5","#c0c020","#7320c5"]
   var lightColours3 = ["#FE9FBF","#F2C4CD","#ffaed7","#F2A2C0","#FF9DBB","#FF92B9","#ECAFB7","#FFC6DA","#FEA8C5","#D98FC5","#BF5AA4","#E68DCF","#E08FCA","#E884CC","#C15BA7","#E78CD1","#DC87BE","#CF6EB1"]
   
-  const pp_url = ('https://events.mcpqndq.dev');
+  const pp_url = ('https://events.mcpqndq.dev'); //stands for "Pit Panda"
   data_backup = MakeAPIAndHTML();
   getPitPanda();
   console.log("The data's been called!");
@@ -546,7 +582,7 @@
   
   function URLToSettings() {
       let here = new URL(window.location.href);
-      if(here.searchParams.get('reminder') == null || here.searchParams.get('flashing') == null || here.searchParams.get('palette') == null || here.searchParams.get('theme') == null || here.searchParams.get('timestamps') == null || here.searchParams.get('visible') == null || here.searchParams.get('notifs') == null ) {
+      if(here.searchParams.get('reminder') == null || here.searchParams.get('flashing') == null || here.searchParams.get('palette') == null || here.searchParams.get('theme') == null || here.searchParams.get('timestamps') == null || here.searchParams.get('visible') == null || here.searchParams.get('notifs') == null || here.searchParams.get('desktop') == null) {
           console.log("No settings :fear:")
           ChangePalette(0);
            EventFlash(60); //setting everything up!
@@ -556,7 +592,7 @@
       EventFlashSec = here.searchParams.get('flashing');
       Palette = here.searchParams.get('palette')
       theme = here.searchParams.get('theme');
-      showEventToD = here.searchParams.get('timestamps').charAt(0);
+      showEventToD = here.searchParams.get('timestamps').charAt(0); //first character of "timestamps" in URL
       showEventTuE = here.searchParams.get('timestamps').charAt(1);
       showEventDNC = here.searchParams.get('timestamps').charAt(2);
       if (showEventDNC == false) {
@@ -564,9 +600,10 @@
       }
       SettingsSelectedEvents = parseInt(here.searchParams.get('visible'));
       SettingsNotifyEvents = parseInt(here.searchParams.get('notifs'));
+      SettingsDesktopNotifs = parseInt(here.searchParams.get('desktop'));
   
       ChangePalette(Palette);
-      SetAudio(parseInt(AudioTimer)); //this does not work
+      SetAudio(parseInt(AudioTimer)); //this does not work //then WHY did you add it??
       EventFlash(window.EventFlashSec);
   
       if(window.showEventToD == 0) {
@@ -752,6 +789,7 @@
       here.searchParams.append('timestamps', (showEventToD | 0).toString() + (showEventTuE | 0).toString() + (showEventDNC | 0).toString());
       here.searchParams.append('flashing', EventFlashSec);
       here.searchParams.append('reminder', AudioTimer);
+      here.searchParams.append('desktop', SettingsDesktopNotifs);
   
       window.location = here; 
   }
