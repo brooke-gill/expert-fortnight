@@ -18,7 +18,7 @@
     <div id="current-event" style="position: absolute; top: 35px; font-size: 25px; width: 450px; word-wrap: break-word; left: 35%; vertical-align: middle; padding: 1px;" class="flashtext unselectable" align="center">Current events will<br>show up here.</div>
   
   
-    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">asdljfljksdafjlksadljkf</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
+    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">brokeafk.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
     </div>
   
     <div style="background: #314; padding: 5px; width: 120px; height: 32px; position: absolute; left: 300px; top: 24px; border-radius: 25px; display:flex; align-items: center; vertical-align:center; justify-content: center;
@@ -28,15 +28,15 @@
   <p style="font-size:15px"><span>Theme: </span><span id="settings-theme-dark" onclick='ChangeTheme("dark")'>Dark</span><span> / </span><span id="settings-theme-light" onclick='ChangeTheme("light")'>Light</span></p> 
   <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p>
   <p style="font-size:15px"><span>Event notifications: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
-  <p style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
-  <p style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
+  <p id="anotif" style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
+  <p id="dnotif" style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
   <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
   <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
 
   
   <div id="notifications-major" style="display: block; position: absolute; top: -50px; right: 200px; text-align: right; font-size: 15px; color: #FFFFFF;">
     <div><span id="visible-Pizza" onclick='VisibilityToggle("Pizza")' class="hand_cursor">Pizza</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Pizza" onclick='NotifToggle("Pizza")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
-    <div><span id="visible-Raffle" onclick='VisibilityToggle("Raffle")' class="hand_cursor">Raffle</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Raffle" onclick='NotifToggle("Raffle")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
+    <div><span id="visible-Raffle" onclick='VisibilityToggle("Raffle")' class="hand_cursor">Raffle</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Raffle" onclick='NotifToggle("Raffle")'class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
     <div><span id="visible-Squads" onclick='VisibilityToggle("Squads")' class="hand_cursor">Squads</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Squads" onclick='NotifToggle("Squads")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
     <div><span id="visible-Blockhead" onclick='VisibilityToggle("Blockhead")' class="hand_cursor">Blockhead</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Blockhead" onclick='NotifToggle("Blockhead")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
     <div><span id="visible-Spire" onclick='VisibilityToggle("Spire")' class="hand_cursor">Spire</span><svg xmlns="http://www.w3.org/2000/svg" height="12px" viewBox="0 0 24 24" width="24px" fill="#ffffff" id="notif-Spire" onclick='NotifToggle("Spire")' class="hand_cursor"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg></div>
@@ -205,7 +205,13 @@
   
   function SetAudio(seconds) {
     window.AudioTimer = seconds;
-    console.log("Audio timer set to " + AudioTimer + " seconds.")
+    console.log("Notification timer set to " + AudioTimer + " seconds.")
+    document.getElementById('anotif').style.display = "block"
+    document.getElementById('dnotif').style.display = "block"
+    for(var i = 0; i < 18; i++) {
+      if(DoesStuffExist == true) {
+      document.getElementById('notif-' + eventsNoSpaces[i]).style.display = "inline";
+    }}
     if(seconds == 300) {
       document.getElementById('audio-300').style.color = NormalText;
       document.getElementById('audio-180').style.color = "#888888";
@@ -224,11 +230,18 @@
       document.getElementById('audio-300').style.color = "#888888";
       document.getElementById('audio-0').style.color = "#888888"; 
     }
-    if(seconds == -10) {
+    if(seconds <= 0) {
       document.getElementById('audio-0').style.color = NormalText;
       document.getElementById('audio-180').style.color = "#888888";
       document.getElementById('audio-60').style.color = "#888888";
       document.getElementById('audio-300').style.color = "#888888"; 
+      document.getElementById('anotif').style.display = "none"
+      document.getElementById('dnotif').style.display = "none"
+      for(var i = 0; i < 18; i++) {
+        if(DoesStuffExist == true) {
+        document.getElementById('notif-' + eventsNoSpaces[i]).style.display = "none";
+      }}
+      
     }
   
   }
@@ -626,6 +639,8 @@
           ChangePalette(0);
            EventFlash(60); //setting everything up!
           SetAudio(-10);
+          DNotif(0);
+          ANotif(0);
       } else {
       AudioTimer = here.searchParams.get('reminder');
       EventFlashSec = here.searchParams.get('flashing');
