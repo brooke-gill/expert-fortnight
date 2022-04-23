@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>AMgougs</title>
+    <title>Hypidasfr</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -246,8 +246,7 @@
 
                                             // Let's check whether notification permissions have already been granted
                                             else if (Notification.permission === "granted") {
-                                              // If it's okay let's create a notification
-                                              var notification = new Notification("Hi there!");
+                                              console.log("Notifications were already enabled!")
                                             }
 
                                             // Otherwise, we need to ask the user for permission
@@ -256,7 +255,8 @@
                                               Notification.requestPermission().then(function (permission) {
                                                 // If the user accepts, let's create a notification
                                                 if (permission === "granted") {
-                                                  var notification = new Notification("Hi there!");
+                                                  console.log("Notifications enabled!")
+                                                  document.getElementById('desktop-on').innerHTML = "On"
                                                 }
                                                 else {
                                                   document.getElementById('desktop-on').innerHTML = "Notifications denied :("
@@ -512,6 +512,7 @@
     for(var i = window.HiddenEventCount; i <= window.HiddenEventCount + 3; i++) {
       if (window.AudioEvents.includes(window.data[i]['event'])  && window.data[i]['timestamp'] - currentTime() <= (AudioTimer * 1000 + 1000) && window.data[i]['timestamp'] - currentTime() >= (AudioTimer * 1000 - 1000)) {
       event_sound.play();
+      var notification = new Notification("Hey there-- " + window.data[i]['event'] + " is starting in " + AudioTimer/60 + " seconds!");
    }
   }}
   }
