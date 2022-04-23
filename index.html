@@ -18,7 +18,7 @@
     <div id="current-event" style="position: absolute; top: 35px; font-size: 25px; width: 475px; word-wrap: break-word; left: 35%; vertical-align: middle; padding: 1px;" class="flashtext unselectable" align="center">Current events will<br>show up here.</div>
   
   
-    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">google.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
+    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">brofokeafk.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
     </div>
   
     <div style="background: #314; padding: 5px; width: 120px; height: 32px; position: absolute; left: 300px; top: 24px; border-radius: 25px; display:flex; align-items: center; vertical-align:center; justify-content: center;
@@ -27,7 +27,7 @@
   <div id="settings-section" style="display: none; position: relative; bottom: 40px;">
   <p style="font-size:15px"><span>Theme: </span><span id="settings-theme-dark" onclick='ChangeTheme("dark")'>Dark</span><span> / </span><span id="settings-theme-light" onclick='ChangeTheme("light")'>Light</span></p> 
   <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p>
-  <p style="font-size:15px"><span>Event notifications: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
+  <p style="font-size:15px"><span id="tut-notif" style="color: #ffff80">Notifications</span><span>: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
   <p id="anotif" style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
   <p id="dnotif" style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
   <p style="font-size:15px"><span id="alert-nobells" style="color: #ff7777; display: none">You're not being reminded for any events!<br>Click the bells in the top-right corner to receive notifications.</span></p>
@@ -333,6 +333,7 @@
       document.getElementById('settings-palette-1').innerHTML = ("Sunset");
       document.getElementById('settings-palette-2').innerHTML = ("Beachside");
       document.getElementById('settings-palette-3').innerHTML = ("Bubblegum");
+      document.getElementById('tut-notif').style.color = "#BD8E02"
     } else if (window.theme == "dark") {
       NormalText = "#FFFFFF";
       document.getElementById('settings-theme-light').style.color = "#888888";
@@ -345,6 +346,7 @@
       document.getElementById('settings-palette-1').innerHTML = ("Sunrise");
       document.getElementById('settings-palette-2').innerHTML = ("Ocean");
       document.getElementById('settings-palette-3').innerHTML = ("Alpha");
+      document.getElementById('tut-notif').style.color = "#FFFF80"
     }
     document.getElementById('day-svg').style.fill = NormalText;
     document.getElementById('settings').style.color = "#888888";
@@ -563,7 +565,12 @@
       }
       if(SettingsDesktopNotifs == 1) {
       if(Date.now() > time1 + 10000) { //if it's been more than 10 seconds since the last notification
-      var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + NotifTimer/60 + " minutes!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
+      if (NotifTimer == 60) {
+        var minute_s = "minute"
+      } else {
+        var minute_s = "minutes"
+      }
+      var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + NotifTimer/60 + " " + minute_s +"!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
       time1 = Date.now()
       }
       }
@@ -582,7 +589,7 @@
     } else if (showEventToD == true && showEventTuE == false) {
     document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">` + TimeOfDay(transformation[i].timestamp) + `: </span><span> ` + transformation[i].event + `</span><span style="font-family: minecraftregular"> </span>`);
     } else if (showEventToD == false && showEventTuE == false) {
-    document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">` + transformation[i].event + `</span>`);
+    document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">f` + transformation[i].event + `</span>`);
     }
     if(MakeFunTimestamps(transformation[i].timestamp) == "Passed!" && !!document.getElementById('event_' + String(i)) == true) {
       //document.getElementById('event_' + String(i)).remove();
