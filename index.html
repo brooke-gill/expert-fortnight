@@ -723,7 +723,7 @@
       var leadingZeroes = (num, places) => String(num).padStart(places, '0')
       var number = here.searchParams.get('visible');
 
-      if(number = "0") {
+      if(number == "0") {
         document.getElementById('alert-noevents').style.display = "block";
       }
       var BinaryEvents = (leadingZeroes(parseInt(number).toString(2),events.length));
