@@ -31,6 +31,7 @@
   <p id="anotif" style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
   <p id="dnotif" style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
   <p style="font-size:15px"><span id="alert-nobells" style="color: #ff7777; display: none">You're not being reminded for any events!<br>Click the bells in the top-right corner to receive notifications.</span></p>
+  <p style="font-size:15px"><span id="alert-notypes" style="color: #ff7777; display: none">Make sure to turn either "Audio notifications"<br>or "Desktop notifications" on to receive alerts.</span></p>
   <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
   <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
   <p style="font-size:15px"><span id="alert-noevents" style="color: #ff7777; display: none">You don't have any events selected!<br>Click the event names in the top-right corner to make some visible.</span></p>
@@ -219,6 +220,9 @@
       console.log(window.AudioEvents + " audioevents")
      document.getElementById('alert-nobells').style.display = "block";
       }
+    if(SettingsDesktopNotifs == 0 && SettingsAudioNotifs == 0) {
+      document.getElementById('alert-notypes').style.display = "block"
+    }
   }
     if(seconds == 300) {
       document.getElementById('audio-300').style.color = NormalText;
@@ -246,6 +250,7 @@
       document.getElementById('anotif').style.display = "none"
       document.getElementById('dnotif').style.display = "none"
       document.getElementById('alert-nobells').style.display = "none";
+      document.getElementById('alert-notypes').style.display = "none";
       for(var i = 0; i < 18; i++) {
         if(DoesStuffExist == true) {
         document.getElementById('notif-' + eventsNoSpaces[i]).style.display = "none";
@@ -261,10 +266,14 @@
     if(tog == 1) {
       document.getElementById('audio-on').style.color = NormalText;
       document.getElementById('audio-off').style.color = "#888888";
+      document.getElementById('alert-notypes').style.display = 'none';
     }
     if(tog == 0) {
       document.getElementById('audio-off').style.color = NormalText;
       document.getElementById('audio-on').style.color = "#888888";
+      if(SettingsDesktopNotifs == 0 && NotifTimer > 0) {
+        document.getElementById('alert-notypes').style.display = 'block';
+      }
     }
   }
 
@@ -275,6 +284,7 @@
     if(tog == 1) {
       document.getElementById('desktop-on').style.color = NormalText;
       document.getElementById('desktop-off').style.color = "#888888";
+      document.getElementById('alert-notypes').style.display = 'none';
                                             // Let's check if the browser supports notifications
                                             if (!("Notification" in window)) {
                                               document.getElementById('desktop-on').innerHTML = "Your browser doesn't support this!"
@@ -310,6 +320,9 @@
     if(tog == 0) {
       document.getElementById('desktop-off').style.color = NormalText;
       document.getElementById('desktop-on').style.color = "#888888";
+      if(SettingsAudioNotifs == 0 && NotifTimer > 0) {
+        document.getElementById('alert-notypes').style.display = 'block';
+      }
     }
   }
   
@@ -478,6 +491,8 @@
       for(var i = window.HiddenEventCount; i < EventsToLoad; i++) {
         document.getElementById('event_' + String(i)).style.display = "block";
       }
+      
+      document.getElementById('alert-noevents').style.display = "none";
     }
     ChangeTheme(theme);
     console.log(SettingsSelectedEvents);
