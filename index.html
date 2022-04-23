@@ -9,7 +9,7 @@
     <link rel="manifest" href="favicon_icons/site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="favicon_icons/favicon.ico">
     <link href="font/webfontkit-20220210-002804/stylesheet.css" type="text/css" rel="stylesheet">
-    <title>Hypixel Pit Agmosh Tracker</title>
+    <title>Hypixel Pit Events Tracker</title>
     <meta name="description" content="This program allows you to view the upcoming events in the Hypixel Pit in real time."> 
   </head>
   
@@ -18,7 +18,7 @@
     <div id="current-event" style="position: absolute; top: 35px; font-size: 25px; width: 450px; word-wrap: break-word; left: 35%; vertical-align: middle; padding: 1px;" class="flashtext unselectable" align="center">Current events will<br>show up here.</div>
   
   
-    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">brookeafk.com</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
+    <div class="img-with-text" display=""><img src="3457688aa57c4d71ab9d22b04f9160db.png" alt="hi!" draggable="false" width=50px, height=auto, style="float:left"><p style="padding: 15px; padding-left: 60px; padding-top: 8px" id="brookeafk-com">asdljfljksdafjlksadljkf</p><span style="position:relative; left:60px; top:-40px;" id="settings" onclick="SettingsMenu()" class="hand_cursor">View Settings</span>
     </div>
   
     <div style="background: #314; padding: 5px; width: 120px; height: 32px; position: absolute; left: 300px; top: 24px; border-radius: 25px; display:flex; align-items: center; vertical-align:center; justify-content: center;
@@ -28,7 +28,8 @@
   <p style="font-size:15px"><span>Theme: </span><span id="settings-theme-dark" onclick='ChangeTheme("dark")'>Dark</span><span> / </span><span id="settings-theme-light" onclick='ChangeTheme("light")'>Light</span></p> 
   <p style="font-size:15px"><span>Palette: </span><span id="settings-palette-0" onclick='ChangePalette(0)'>Theme 0</span> / <span id="settings-palette-1" onclick='ChangePalette(1)'>Theme 1</span> / <span id="settings-palette-2" onclick='ChangePalette(2)'>Theme 2</span> / <span id="settings-palette-3" onclick='ChangePalette(3)'>Theme 3</span></p>
   <p style="font-size:15px"><span>Event notifications: </span><span id="settings-audio"><span id="audio-300" onclick='SetAudio(300);' class="hand_cursor">5m</span><span> / </span><span id="audio-180" onclick='SetAudio(180);' class="hand_cursor">3m</span><span> / </span><span id="audio-60" onclick='SetAudio(60);' class="hand_cursor">1m</span><span> / </span><span id="audio-0" onclick='SetAudio(-10);' class="hand_cursor">Never</span></span></p>
-  <p style="font-size:15px"><span>Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
+  <p style="font-size:15px"><span>- Audio notifications: </span><span id="desktop-notifs"><span id="audio-on" onclick='ANotif(1);' class="hand_cursor">On</span><span> / </span><span id="audio-off" onclick='ANotif(0);' class="hand_cursor">Off</span></span></p>
+  <p style="font-size:15px"><span>- Desktop notifications (BETA): </span><span id="desktop-notifs"><span id="desktop-on" onclick='DNotif(1);' class="hand_cursor">On</span><span> / </span><span id="desktop-off" onclick='DNotif(0);' class="hand_cursor">Off</span></span></p>
   <p style="font-size:15px"><span>Timestamps: </span><span id="settings-ts-tod" onclick='ToggleTimestamps("tod");' class="hand_cursor">Time of Day</span><span> / </span><span id="settings-ts-tue" onclick='ToggleTimestamps("tue");' class="hand_cursor">Time Until Event</span> / <span id="settings-ts-dnc" onclick='ToggleTimestamps("dnc");' class="hand_cursor">Day-Night Cycle</span></p>
   <p style="font-size:15px"><span id="settings-flashing">Flashing text: </span><span id="settings-flash"><span id="settings-flash-60" onclick='EventFlash(60);' class="hand_cursor">60s</span><span> / </span><span id="settings-flash-30" onclick='EventFlash(30);' class="hand_cursor">30s</span><span> / </span><span id="settings-flash-10" onclick='EventFlash(10);' class="hand_cursor">10s</span><span> / </span><span id="settings-flash-0" onclick='EventFlash(-10);' class="hand_cursor">Never</span></span></p>
 
@@ -67,7 +68,7 @@
   
   var HiddenEventCount = 0;
   var EventsToLoad = 1;
-  var version_number = "0.5.3"
+  var version_number = "0.6"
   var counter = 4;
   var settingsOpened = false;
   var NormalText = "#000000";
@@ -78,6 +79,9 @@
   var SettingsSelectedEvents = 262143;
   var SettingsNotifyEvents = 0;
   var SettingsDesktopNotifs = 0;
+  var SettingsAudioNotifs = 0;
+
+  var time1 = 0; // time since last desktop notif
   
   var theme = "dark";
   var showEventToD = true; //Time of Day
@@ -90,8 +94,8 @@
   var praise_names = ["Andrew","Ellie","oSnapL","1Mad","Emma","catweapon","Twen","C4PS","vnmm","Vermasium","Stampy_fan2","swux","TheSKYeagle","julikabum","McPqndq","clouby","Brano","Ticha","Working"]
   var praise_urls = ["http://deviantart.com/hextant","https://twitter.com/ellwixd","https://twitter.com/oSnapLLL","https://youtu.be/dQw4w9WgXcQ","https://twitter.com/cutekitty271","https://namemc.com/profile/354aa68a43694ba29ff23c705dfc11e6","https://twitter.com/KinderFissa","https://twitter.com/c4pshypixel","https://vnmm.dev/","https://namemc.com/profile/9f65cdd1-81d7-49f3-8d41-fef76a7a8768","https://hypixel.net/members/probot.1901786/","https://www.tiktok.com/@swuxify_","https://twitter.com/leskyeagle","https://twitter.com/julikabum_0","https://pitpanda.rocks","https://brookeafk.com","https://twitter.com/branodon","https://pitpanda.rocks/players/18fe5844ce244d11ad3435c96435900f","https://twitter.com/WorkingMC"]
   //Note: Jojo's cock is seven inches (18cm) long. I've been forced to write this, unfortunately. Sorry that you had to read this.
-  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop']
-  var greeting = ['Hey there— ','Hi! ','Get ready— ','Hurry up! ']
+  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop','audio']
+  var greeting = ['Hey there— ','Get ready— ','Hurry up! ']
   var event_sound = new Audio("event_arriving.mp3");
   event_sound.volume = 0.2;
   var ok_ids = []
@@ -229,6 +233,20 @@
   
   }
 
+  function ANotif(tog) {
+    window.SettingsAudioNotifs = tog;
+    console.log("Audio notifications setting: " + tog);
+    if(tog == 1) {
+      document.getElementById('audio-on').style.color = NormalText;
+      document.getElementById('audio-off').style.color = "#888888";
+    }
+    if(tog == 0) {
+      document.getElementById('audio-off').style.color = NormalText;
+      document.getElementById('audio-on').style.color = "#888888";
+    }
+  }
+
+
   function DNotif(tog) { //Short for "Desktop Notification" and "toggle"
     window.SettingsDesktopNotifs = tog;
     console.log("Desktop notifications setting: " + tog);
@@ -312,6 +330,7 @@
       EventFlash(window.EventFlashSec);
       SetAudio(window.AudioTimer);
       DNotif(window.SettingsDesktopNotifs);
+      ANotif(window.SettingsAudioNotifs);
       console.log("Stuff exists. Updating event flashes and audio.");
     }
     for(var i = 1; i <= window.eventsNoSpaces.length; i++) {
@@ -512,9 +531,15 @@
     if(DoesStuffExist == true) {
     for(var i = window.HiddenEventCount; i <= window.HiddenEventCount + 3; i++) {
       if (window.AudioEvents.includes(window.data[i]['event'])  && window.data[i]['timestamp'] - currentTime() <= (AudioTimer * 1000 + 1000) && window.data[i]['timestamp'] - currentTime() >= (AudioTimer * 1000 - 1000)) {
+      if(SettingsAudioNotifs == 1) {
       event_sound.play();
-
+      }
+      if(SettingsDesktopNotifs == 1) {
+      if(Date.now() > time1 + 10000) { //if it's been more than 10 seconds since the last notification
       var notification = new Notification(greeting[Math.floor(Math.random()*greeting.length)] + window.data[i]['event'] + " is starting in " + AudioTimer/60 + " minutes!", {body: "", icon: "3457688aa57c4d71ab9d22b04f9160db.png"});
+      time1 = Date.now()
+      }
+      }
    }
   }}
   }
@@ -615,6 +640,7 @@
       SettingsSelectedEvents = parseInt(here.searchParams.get('visible'));
       SettingsNotifyEvents = parseInt(here.searchParams.get('notifs'));
       SettingsDesktopNotifs = parseInt(here.searchParams.get('desktop'));
+      SettingsAudioNotifs = parseInt(here.searchParams.get('audio'))
   
       ChangePalette(Palette);
       SetAudio(parseInt(AudioTimer)); //this does not work //then WHY did you add it??
@@ -804,6 +830,7 @@
       here.searchParams.append('flashing', EventFlashSec);
       here.searchParams.append('reminder', AudioTimer);
       here.searchParams.append('desktop', SettingsDesktopNotifs);
+      here.searchParams.append('audio', SettingsAudioNotifs);
   
       window.location = here; 
   }
