@@ -604,7 +604,7 @@
     } else if (showEventToD == true && showEventTuE == false) {
     document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">` + TimeOfDay(transformation[i].timestamp) + `: </span><span> ` + transformation[i].event + `</span><span style="font-family: minecraftregular"> </span>`);
     } else if (showEventToD == false && showEventTuE == false) {
-    document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">f` + transformation[i].event + `</span>`);
+    document.getElementById('event_' + String(i)).innerHTML = (`<span style="font-family: minecraftregular">` + transformation[i].event + `</span>`);
     }
     if(MakeFunTimestamps(transformation[i].timestamp) == "Passed!" && !!document.getElementById('event_' + String(i)) == true) {
       //document.getElementById('event_' + String(i)).remove();
