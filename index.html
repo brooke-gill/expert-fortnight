@@ -108,7 +108,7 @@
   var praise_names = ["Andrew","Ellie","oSnapL","1Mad","Emma","catweapon","Twen","C4PS","vnmm","Vermasium","Stampy_fan2","swux","TheSKYeagle","julikabum","McPqndq","clouby","Brano","Ticha","Working"]
   var praise_urls = ["http://deviantart.com/hextant","https://twitter.com/ellwixd","https://twitter.com/oSnapLLL","https://youtu.be/dQw4w9WgXcQ","https://twitter.com/cutekitty271","https://namemc.com/profile/354aa68a43694ba29ff23c705dfc11e6","https://twitter.com/KinderFissa","https://twitter.com/c4pshypixel","https://vnmm.dev/","https://namemc.com/profile/9f65cdd1-81d7-49f3-8d41-fef76a7a8768","https://hypixel.net/members/probot.1901786/","https://www.tiktok.com/@swuxify_","https://twitter.com/leskyeagle","https://twitter.com/julikabum_0","https://pitpanda.rocks","https://brookeafk.com","https://twitter.com/branodon","https://pitpanda.rocks/players/18fe5844ce244d11ad3435c96435900f","https://twitter.com/WorkingMC"]
   //Note: Jojo's cock is seven inches (18cm) long. I've been forced to write this, unfortunately. Sorry that you had to read this.
-  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop','audio']
+  var AllSettings = ['visible','notifs','palette','timestamps','theme','flashing','reminder','desktop','audio','font']
   var event_sound = new Audio("event_arriving.mp3");
   event_sound.volume = 0.2;
   var ok_ids = []
@@ -722,6 +722,7 @@
       } else {
 
       CorrectFont = here.searchParams.get('font');
+      console.log("CORRECT FONT VALUE: " + CorrectFont);
       if (CorrectFont == '0') {
         CorrectFont = 'minecraftregular'
       } else {
@@ -945,9 +946,11 @@
       here.searchParams.append('reminder', NotifTimer);
       here.searchParams.append('desktop', SettingsDesktopNotifs);
       here.searchParams.append('audio', SettingsAudioNotifs);
-      if(CorrectFont == 'minecraft-regular') {
+      console.log(CorrectFont)
+      if(CorrectFont == 'minecraftregular') {
       here.searchParams.append('font', '0');
-      } else {
+      }
+      if(CorrectFont == 'sans-serif') {
       here.searchParams.append('font', '1');
       }
       window.location = here; 
