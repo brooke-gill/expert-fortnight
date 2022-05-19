@@ -13,17 +13,24 @@
     <br>
     <span style="font-size: x-large"><span id="gain" class="mb"></span> <span id="hour" class="ma"></span></span>
     <br>
-    <span style="font-size: large" id="fake" class="m7"></span>
+    <span style="font-size: large" id="fake" class="m7"></span><span style="font-size: large" id="slowapi" class="m7">&nbsp;| API typically updates every 3 minutes</span>
     <br>
     <br>
     <br>
     <br>
-  </center>
-  <span style="font-size: large" id="time_level" class="md"></span>
+  <span style="font-size: large" id="time_level" class="m7"></span>
   <br>
-  <span style="font-size: large" id="time_10level"></span>
+  <span style="font-size: large" id="time_10level" class="m7"></span>
   <br>
-  <span style="font-size: large" id="time_prestige" class="mc"></span>
+  <span style="font-size: large" id="time_prestige" class="m7"></span>
+  <br>
+  <br>
+  <br>
+  <span style="font-size: large" class="m7"><span>Currently tracking </span><span id="target" class="md"></span><span id="change" style="cursor:pointer" onclick="ChangeIGN()"> | Click here to change</span></span>
+  <br>
+  <span style="font-size: large; visibility: hidden;" class="m7" id="pleasewait">Please wait up to 12 seconds.</span>
+
+</center>
 <script>
 xp_map = [15, 30, 50, 75, 125, 300, 600, 800, 900, 1000, 1200, 1500]
 prestiges = [100, 110, 120, 130, 140, 150, 175, 200, 250, 300, 400, 500, 600, 700, 800, 900, 1000, 1200, 1400, 1600, 1800, 2000, 2400, 2800, 3200, 3600, 4000, 4500, 5000, 7500, 10000, 10100, 10100, 10100, 10100, 10100, 20000, 30000, 40000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 300000, 500000, 1000000, 5000000, 10000000]
@@ -44,10 +51,20 @@ var oldxp = 0
 var elapsed = 0
 var difference = 0
 var fakexp = 0
-
 var nextlevelxp = 0;
+var next10levelxp = 0;
+var menuopen = 0;
+var nextprestigecolor = 0;
+var nextlevelcolor = 0;
 
-    user = "MansLikeEtienne"
+var calcxp = 0;
+var calcprestige = 0;
+
+
+var whattoput = 0;
+
+    user = "BrookeAFK"
+    document.getElementById('target').innerHTML = user;
     console.log(window.user)
     CheckAPI()
     setInterval(CheckAPI2, 6000);
@@ -61,6 +78,19 @@ var nextlevelxp = 0;
     });
     }
 
+    function convertToRoman(num) {
+     var roman = {
+    M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1
+    };
+    var str = '';
+
+    for (var i of Object.keys(roman)) {
+        var q = Math.floor(num / roman[i]);
+        num -= q * roman[i];
+        str += i.repeat(q);
+    }
+    return str;
+}
 
     function UpdateStuff() {
         xp = window.fakexp;
@@ -73,34 +103,19 @@ document.getElementById('xp').innerHTML = (window.fakexp.toLocaleString("en-US")
         }
     }
 
-    if(prestige > 0) {
-    xp = xp - prestige_xp[prestige - 1]
-    //console.log("Subtracting " + prestige_xp[prestige - 1] + " XP to complete calculation. Remaining XP is " + xp)
-    }
-    while (xp > 1) {
-        level = level + 1;
+    calcxp = prestige_xp[prestige];
+    level = 120;
+    while (calcxp > xp) {
         //console.log("Subtracting " + (xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100) + " XP from " + xp + ". Level: " + level)
-        xp = xp - xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100;
+        level = level - 1;
+        calcxp = calcxp - xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100
     }
     //console.log("Can't subtract " + xp_map[Math.floor(level / 10)] + " XP from " + xp + "! Level: " + level)
+    //console.log("")
 
 
     console.log("Prestige: " + prestige)
     console.log("Level: " + level)
-    function convertToRoman(num) {
-  var roman = {
-    M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1
-  };
-  var str = '';
-
-  for (var i of Object.keys(roman)) {
-    var q = Math.floor(num / roman[i]);
-    num -= q * roman[i];
-    str += i.repeat(q);
-  }
-
-  return str;
-}
 document.getElementById('level').innerHTML = ("[" + convertToRoman(prestige) + "-" + level + "]");
 
 prestigecolors = ['7','9','e','6','c','5','d','f','b','1','2','3']
@@ -119,6 +134,13 @@ document.getElementById('level').innerHTML = `<span class=m` + myprestigecolor +
 }
 
     function CheckAPI2() {
+    if(menuopen != 3 && menuopen > 0) {
+        menuopen = menuopen - 1
+        console.log(menuopen + " is the new menuopen value.")
+        document.getElementById('pleasewait').style.visibility = "visible";
+    }
+    if(menuopen < 1) {
+    document.getElementById('pleasewait').style.visibility = "hidden";
     $.getJSON(('https://api.hypixel.net/player?key=f3bb6b73-081e-43ef-a198-861e5c11ac16&uuid=' + window.uuid), function(data) {
     let json6 = data;
     console.log(json6.player.stats.Pit.profile.xp)
@@ -139,19 +161,94 @@ document.getElementById('level').innerHTML = `<span class=m` + myprestigecolor +
     }
     currentxp = xp
 });
+}}
+
+function Reset() {
+    prestige = 0
+level = 0
+startingxp = 0 
+currentxp = 0
+ startingtime = 0
+ currenttime = 0
+ uuid_connect = false
+ done = false
+ flag = false
+ lastupdated = 0 //Unix time of last update
+ realxp = 0 //current count of xp
+ oldxp = 0
+ elapsed = 0
+ difference = 0
+ fakexp = 0
+ nextlevelxp = 0;
+ nextprestigecolor = 0;
+ nextlevelcolor = 0;
+}
+
+function ChangeIGN() {
+    menuopen = 3
+    newIGN = prompt("Enter a new IGN here.", user);
+    if (newIGN == null || newIGN == "") {
+    console.log("hey what the heck")
+    } else {
+    user = newIGN;
+    document.getElementById('target').innerHTML = (user + " (pending)");
+    Reset()
+    CheckAPI()
+    document.getElementById('target').innerHTML = (user);
+    oldxp = currentxp
+    document.getElementById('pleasewait').style.visibility = "visible";
+    menuopen = 2
+    }
 }
 
 function TimeUntil() {
-nextlevelxp = (prestige_xp[prestige - 1] + 15)
-if (isNaN(nextlevelxp)) {
-nextlevelxp = 15;
+nextlevelxp = (prestige_xp[prestige - 1]) + 15
+if (isNaN(nextlevelxp)) { //if the prestige is 0
+nextlevelxp = 0;
 }
 
+//console.log("")
 for(j = 0; j <= level; j++) {
 nextlevelxp = nextlevelxp + (prestiges[prestige] / 100 * xp_map[Math.floor(j / 10)])
+//console.log("[Level " + j + "] Adding " + (prestiges[prestige] / 100 * xp_map[Math.floor(j / 10)]) + " to XP. Next Level XP is " + nextlevelxp)
 }
-document.getElementById('time_level').innerHTML = (nextlevelxp - fakexp);
-document.getElementById('time_prestige').innerHTML = (prestige_xp[prestige] - fakexp)
+nextprestigecolor = prestigecolors[((Math.floor((prestige+6)/5)))]
+if(prestige == 0) {
+    nextprestigecolor = prestigecolors[1]
+}
+nextlevelcolor = levelcolors[Math.floor((level + 1)/10)]
+
+if(level < 110) {
+    if(prestige == 0) {
+        next10levelxp = 0;
+    } else {
+    next10levelxp = prestige_xp[prestige - 1]
+    }
+    for(k = 0; k <= Math.ceil(level / 10); k++) {
+        next10levelxp = next10levelxp + (prestiges[prestige] * xp_map[prestige]) * 10
+    }
+}
+console.log(next10levelxp + " / " + "")
+
+if(level == 120) {
+    document.getElementById('time_level').innerHTML = ("Maximum level reached!")
+} else {
+
+    if (convertible - currentTime() <= 3600000) {
+      whattoput = ((Math.floor(((convertible - currentTime()))/60000) + "m" + (Math.floor(((convertible - currentTime()))/1000) % 60) + "s"));
+  } else if (convertible - currentTime() > 1) {
+      whattoput = ((Math.floor(((convertible - currentTime()))/3600000) + "h" + (Math.floor(((convertible - currentTime()))/60000) % 60) + "m"));
+  }
+
+
+
+
+
+
+
+    document.getElementById('time_level').innerHTML = ((nextlevelxp - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + myprestigecolor + `">[</span><span class="m` + nextlevelcolor + `">` + (level + 1) + `</span><span class="m` + myprestigecolor + `">] </span><span class="m6">` + ((nextlevelxp - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime))).toFixed(2) + " hours")
+}
+    document.getElementById('time_prestige').innerHTML = ((prestige_xp[prestige] - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + nextprestigecolor + `">[</span><span class="me">` + convertToRoman(prestige + 1) + `</span><span class="m` + nextprestigecolor + `">] </span><span class="m6">` + ((prestige_xp[prestige] - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime))).toFixed(2) + " hours")
 }
 
 function XPHour() {
