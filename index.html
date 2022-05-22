@@ -17,7 +17,6 @@
     <br>
     <br>
     <br>
-    <br>
   <span style="font-size: large" id="time_level" class="m7"></span>
   <br>
   <span style="font-size: large" id="time_10level" class="m7"></span>
@@ -60,7 +59,7 @@ var nextlevelcolor = 0;
 var calcxp = 0;
 var calcprestige = 0;
 
-
+var numberofupdates = 0;
 var whattoput = 0;
 
     user = "BrookeAFK"
@@ -92,6 +91,19 @@ var whattoput = 0;
     return str;
 }
 
+function toTimestamp(duration) {
+if (duration <= 3600) {
+      return ((Math.floor(((duration))/60) + "m" + (Math.floor((duration)) % 60) + "s"));
+  } else if (duration > 1) {
+      if(duration == Infinity) {
+          return("")
+      } else {
+      return ((Math.floor((duration)/3600) + "h" + (Math.floor((duration)/60) % 60) + "m"));
+      }
+  }
+}
+
+
     function UpdateStuff() {
         xp = window.fakexp;
 document.getElementById('xp').innerHTML = (window.fakexp.toLocaleString("en-US") + " XP") //gives xp commas
@@ -108,7 +120,7 @@ document.getElementById('xp').innerHTML = (window.fakexp.toLocaleString("en-US")
     while (calcxp > xp) {
         //console.log("Subtracting " + (xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100) + " XP from " + xp + ". Level: " + level)
         level = level - 1;
-        calcxp = calcxp - xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100
+        calcxp = calcxp - Math.ceil(xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100)
     }
     //console.log("Can't subtract " + xp_map[Math.floor(level / 10)] + " XP from " + xp + "! Level: " + level)
     //console.log("")
@@ -147,6 +159,11 @@ document.getElementById('level').innerHTML = `<span class=m` + myprestigecolor +
     xp = json6.player.stats.Pit.profile.xp
     if(realxp != xp) {
     oldxp = realxp
+    numberofupdates = numberofupdates + 1;
+    if(numberofupdates == 2) {
+        startingtime = Date.now()
+        console.log("hahha! the time reset(the software updated)")
+    }
     }
     realxp = xp
     if(startingxp == 0) {
@@ -182,6 +199,7 @@ currentxp = 0
  nextlevelxp = 0;
  nextprestigecolor = 0;
  nextlevelcolor = 0;
+ numberofupdates = 0;
 }
 
 function ChangeIGN() {
@@ -202,16 +220,23 @@ function ChangeIGN() {
 }
 
 function TimeUntil() {
-nextlevelxp = (prestige_xp[prestige - 1]) + 15
+nextlevelxp = prestige_xp[prestige];
 if (isNaN(nextlevelxp)) { //if the prestige is 0
 nextlevelxp = 0;
 }
 
-//console.log("")
+    levelinc = 120;
+    while (levelinc > (level + 1)) {
+        //console.log("Subtracting " + (xp_map[Math.floor(level / 10)] * prestiges[prestige] / 100) + " XP from " + xp + ". Level: " + level)
+        levelinc = levelinc - 1;
+        nextlevelxp = nextlevelxp - Math.ceil(xp_map[Math.floor(levelinc / 10)] * prestiges[prestige] / 100)
+    }
+
+/*console.log("")
 for(j = 0; j <= level; j++) {
 nextlevelxp = nextlevelxp + (prestiges[prestige] / 100 * xp_map[Math.floor(j / 10)])
 //console.log("[Level " + j + "] Adding " + (prestiges[prestige] / 100 * xp_map[Math.floor(j / 10)]) + " to XP. Next Level XP is " + nextlevelxp)
-}
+}*/
 nextprestigecolor = prestigecolors[((Math.floor((prestige+6)/5)))]
 if(prestige == 0) {
     nextprestigecolor = prestigecolors[1]
@@ -233,22 +258,9 @@ console.log(next10levelxp + " / " + "")
 if(level == 120) {
     document.getElementById('time_level').innerHTML = ("Maximum level reached!")
 } else {
-
-    if (convertible - currentTime() <= 3600000) {
-      whattoput = ((Math.floor(((convertible - currentTime()))/60000) + "m" + (Math.floor(((convertible - currentTime()))/1000) % 60) + "s"));
-  } else if (convertible - currentTime() > 1) {
-      whattoput = ((Math.floor(((convertible - currentTime()))/3600000) + "h" + (Math.floor(((convertible - currentTime()))/60000) % 60) + "m"));
-  }
-
-
-
-
-
-
-
-    document.getElementById('time_level').innerHTML = ((nextlevelxp - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + myprestigecolor + `">[</span><span class="m` + nextlevelcolor + `">` + (level + 1) + `</span><span class="m` + myprestigecolor + `">] </span><span class="m6">` + ((nextlevelxp - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime))).toFixed(2) + " hours")
+    document.getElementById('time_level').innerHTML = ((nextlevelxp - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + myprestigecolor + `">[</span><span class="m` + nextlevelcolor + `">` + (level + 1) + `</span><span class="m` + myprestigecolor + `">] </span><span class="m6">` + toTimestamp((nextlevelxp - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime)) * 3600))
 }
-    document.getElementById('time_prestige').innerHTML = ((prestige_xp[prestige] - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + nextprestigecolor + `">[</span><span class="me">` + convertToRoman(prestige + 1) + `</span><span class="m` + nextprestigecolor + `">] </span><span class="m6">` + ((prestige_xp[prestige] - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime))).toFixed(2) + " hours")
+    document.getElementById('time_prestige').innerHTML = ((prestige_xp[prestige] - fakexp).toLocaleString("en-US") + ` XP until </span><span class="m` + nextprestigecolor + `">[</span><span class="me">` + convertToRoman(prestige + 1) + `</span><span class="m` + nextprestigecolor + `">] </span><span class="m6">` + toTimestamp((prestige_xp[prestige] - fakexp)/(((fakexp - startingxp)*3600000)/(currenttime - startingtime)) * 3600))
 }
 
 function XPHour() {
