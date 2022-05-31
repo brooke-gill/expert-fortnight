@@ -1,0 +1,18 @@
+body {
+    background-color: #333;
+    font-family: Manrope, Roboto, sans-serif;
+  }
+  
+  .header {
+    font-size: 20px;
+  }
+
+  .body {
+    font-size: 16px;
+  }
+
+  .item { 
+    outline: 1px solid white;
+    width: 39%;
+    display: inline-block;
+}
