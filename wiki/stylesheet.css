@@ -1,6 +1,9 @@
 body {
     background-color: #543c3f;
     font-family: Roboto, Manrope, sans-serif;
+    background-attachment: fixed;
+    
+    background-image: url('https://hypixel.net/attachments/2019-02-02_21-35-09_2-png.1095496/');
   }
   
   .header {
