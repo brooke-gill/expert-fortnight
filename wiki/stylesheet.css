@@ -96,3 +96,27 @@ body {
 .mf {
     color: #fff
 }
+
+a:link {
+  color: #B15AC2;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #725279;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #E7C2EE;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+a:active {
+  color: #EDDDF0;
+  background-color: transparent;
+  text-decoration: underline;
+}
