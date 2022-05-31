@@ -1,11 +1,17 @@
 body {
-    background-color: #333;
-    font-family: Manrope, Roboto, sans-serif;
+    background-color: #543c3f;
+    font-family: Roboto, Manrope, sans-serif;
   }
   
   .header {
     font-size: 30px;
     color: wheat;
+  }
+
+  .subheader {
+    font-size: 16px;
+    color: white;
+    font-style: italic;
   }
 
   .body {
@@ -29,10 +35,11 @@ body {
 
   table,th,td {
   border:1px solid white;
+  padding: 5px;
 }
 
   .box {
-  background-color: #222;
+  background-color: #361a1d;
   width: 80%;
   padding: 20px 50px 50px;
   margin: 20px;
