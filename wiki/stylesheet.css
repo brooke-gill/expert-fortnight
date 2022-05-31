@@ -3,9 +3,10 @@ body {
     font-family: Roboto, Manrope, sans-serif;
     background-attachment: fixed;
     
-    background-image: './images/castle.jpg';
+    background-image: url('images/abyss.png');
   }
   
+
   .header {
     font-size: 30px;
     color: wheat;
@@ -127,4 +128,9 @@ a:active {
   color: #EDDDF0;
   background-color: transparent;
   text-decoration: underline;
+}
+
+@font-face {
+  font-family: Roboto;
+  src: url('font/Roboto-Regular.ttf');
 }
