@@ -15,8 +15,20 @@ body {
 
   .item { 
     outline: 1px solid white;
-    width: 29%;
-    display: inline-block;
+    width: 20%;
+    float: right;
+    border:1px solid white;
+
+}
+
+  .tableheader {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  table,th,td {
+  border:1px solid white;
 }
 
   .box {
@@ -28,3 +40,52 @@ body {
   margin-right: auto;
   line-height: 1.75;
   }
+
+  .m0 {
+    color: #000
+}
+.m1 {
+    color: #00a
+}
+.m2 {
+    color: #0a0
+}
+.m3 {
+    color: #0aa
+}
+.m4 {
+    color: #a00
+}
+.m5 {
+    color: #a0a
+}
+.m6 {
+    color: #fa0
+}
+.m7 {
+    color: #aaa
+}
+.m8 {
+    color: #555
+}
+.m9 {
+    color: #55f
+}
+.ma {
+    color: #5f5
+}
+.mb {
+    color: #5ff
+}
+.mc {
+    color: #f55
+}
+.md {
+    color: #f5f
+}
+.me {
+    color: #ff5
+}
+.mf {
+    color: #fff
+}
