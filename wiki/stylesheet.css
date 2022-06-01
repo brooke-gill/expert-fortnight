@@ -28,6 +28,11 @@ body {
     font-weight: bold;
   }
 
+  .small {
+    font-size: 12px;
+    color: #fff;
+  }
+
   .item { 
     outline: 1px solid white;
     width: 20%;
