@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <br><br><br><center>
+        <p id="top">Ari has made</p>
+        <p id="mid" style="font-size:xx-large"><span>$</span><span id="money"></span></p>
+        <p id="bot">since she opened this page</p>
+        <p id="wage">($<span id="amnt"></span>/hour)</p></center>
+        <script>
+        startingtime = Date.now()
+        var hourlywage = 15.25
+        var moneymade = 0
+        var timeelapsed = 0
+
+        document.getElementById('amnt').innerHTML = hourlywage
+        function Wage() {
+        currenttime = Date.now()
+        timeelapsed = (currenttime - startingtime)/1000
+        moneymade = (timeelapsed * hourlywage / 3600).toFixed(2)
+        document.getElementById('money').innerHTML = moneymade
+        }
+        setInterval(Wage, 200);
+        </script>
+    </body>
+</html>
