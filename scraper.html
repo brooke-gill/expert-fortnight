@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+</body>
+<script>
+var page = 0;
+$.getJSON(('https://pitpanda.rocks/api/leaderboard/xp?&key=a2cca262-f36c-4b6a-a666-d99a7a8ff440&page=' + page), function(data) {
+    let json5 = data;
+    console.log(json5.leaderboard)
+    });
+</script>
+</html>
